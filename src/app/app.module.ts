@@ -10,6 +10,7 @@ import { AlertComponent} from './_components';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './_home';
 import { LoginComponent } from './_login';
+import { CryptographyComponent } from './_cryptography';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { LoginComponent } from './_login';
     AlertComponent,
     HomeComponent,
     LoginComponent,
+    CryptographyComponent
   ],
   imports: [
     BrowserModule,
