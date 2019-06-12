@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     cryptographyForm: FormGroup;
     loading = false;
     submitted = false;
+    decryptValue = false;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -31,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getCryptographyList();
         this.cryptographyForm = this.formBuilder.group({
+            id: ['', ],
             encryption: ['', Validators.required],
             decryption: ['', ]
         });
@@ -57,16 +59,48 @@ export class HomeComponent implements OnInit, OnDestroy {
             return;
         }
         this.loading = true;
-        this.cryptographyService.encryptInput(this.f.encryption.value)
+        this.saveOrUpdate(this.f.id.value, this.f.encryption.value)
             .pipe(first())
             .subscribe(
                 data => {
                     this.getCryptographyList();
                     this.loading = false;
+                    this.resetForm();
                 },
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+
+    }
+
+    saveOrUpdate(id: number, input: string) {
+        return id ? this.cryptographyService.update(id, input) : this.cryptographyService.encryptInput(input);
+    }
+
+    getById(id: number) {
+        this.cryptographyService.getById(id)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.cryptographyForm.setValue({
+                        id: data.id,
+                        encryption: data.encodedValue,
+                        decryption: data.inputText
+                    });
+                },
+                error => {
+                    this.alertService.error(error);
+                });
+    }
+
+    decrypt() {
+        return this.decryptValue = !this.decryptValue;
+    }
+
+    resetForm() {
+        this.decryptValue = false;
+        this.cryptographyForm.reset();
+        this.submitted = false;
     }
 }
