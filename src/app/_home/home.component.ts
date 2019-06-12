@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class HomeComponent implements OnInit, OnDestroy {
     currentUser: string;
     currentUserSubscription: Subscription;
-    cryptographyList: Cryptography[];
+    cryptographyList: Cryptography[] = [];
 
     //Form metadata
     cryptographyForm: FormGroup;

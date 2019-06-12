@@ -9,7 +9,6 @@
                 </div>
         </div>
 
-        
         <div class="form-group" hidden>
             <input type="text" formControlName="id" class="form-control" />
         </div>
@@ -34,12 +33,12 @@
             <th scope="col">Encrypted Value</th>
         </tr>
     </thead>
-    <tbody class="table-info">
-        <tr *ngFor="let cryptography of cryptographyList" (click)=getById(cryptography.id)>
+    <tbody>
+        <tr *ngFor="let cryptography of cryptographyList" (click)=getById(cryptography.id)  class="table-info">
             <th scope="row">{{cryptography.id}}</th>
             <th>{{cryptography.encodedValue}}</th>
         </tr>
-        <tr *ngIf="!cryptographyList">
+        <tr *ngIf="cryptographyList.length === 0"  class="table-danger">
             <th colspan="2">**--No Encrypted Values--**</th>
         </tr>
     </tbody>
